@@ -279,9 +279,10 @@ const projects: Project[] = [
           </ul>
           <SlideShow
             images={[
-              `${BASE_PATH}/sportq-ss-1.jpg`,
-              `${BASE_PATH}/sportq-ss-2.jpg`,
-              `${BASE_PATH}/sportq-ss-3.jpg`,
+              `${BASE_PATH}/game-ss-1.png`,
+              `${BASE_PATH}/game-ss-2.png`,
+              `${BASE_PATH}/game-ss-3.png`,
+              `${BASE_PATH}/game-ss-4.png`,
             ]}
           />
         </div>
@@ -390,6 +391,74 @@ const projects: Project[] = [
               `${BASE_PATH}/neuro-ss-3.jpg`,
             ]}
           />
+        </div>
+      );
+    },
+  },
+  {
+    id: "this-page-is-wrong",
+    category: "Psychological Horror Game",
+    title: "This Page Is Wrong",
+    src: `${BASE_PATH}/game-ss-1.png`,
+    screenshots: [
+      `${BASE_PATH}/game-ss-1.png`,
+      `${BASE_PATH}/game-ss-2.png`,
+      `${BASE_PATH}/game-ss-3.png`,
+      `${BASE_PATH}/game-ss-4.png`,
+    ],
+    skills: {
+      frontend: [
+        PROJECT_SKILLS.react,
+        PROJECT_SKILLS.ts,
+        PROJECT_SKILLS.tailwind,
+      ],
+      backend: [],
+    },
+    live: "https://this-page-is-wrong.vercel.app",
+    github: "https://github.com/Coder-Zaid/this-page-is-wrong",
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">
+            Psychological Horror Web Game
+          </TypographyP>
+          <TypographyP className="font-mono ">
+            A psychological horror web game where you detect anomalies in seemingly normal webpages. Players observe a normal-looking system analysis webpage and must decide whether an anomaly exists, testing attention to detail and confidence rather than reflexes.
+          </TypographyP>
+          <ProjectsLinks live={this.live} repo={this.github} />
+          <TypographyH3 className="my-4 mt-8">Game Concept & Features</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li>8 progressive levels with increasing difficulty</li>
+            <li>Randomized anomalies - no two playthroughs are the same</li>
+            <li>40% fake-out rate - sometimes there's nothing wrong</li>
+            <li>Psychological horror through subtle visual and audio distortions</li>
+            <li>One mistake ends the game - creates genuine tension</li>
+            <li>Tutorial system with favicon anomaly demonstration</li>
+          </ul>
+          <TypographyH3 className="my-4 mt-8">Horror Elements</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li>Subtle visual glitches that appear randomly</li>
+            <li>Ambient audio hum that creates unease</li>
+            <li>Tab title corruption and favicon flickering</li>
+            <li>Progressive theme decay as you advance</li>
+            <li>Audio cracks on wrong decisions</li>
+          </ul>
+          <TypographyH3 className="my-4 mt-8">Anomaly Types</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li>Layout shifts and font weight changes</li>
+            <li>Letter spacing distortions</li>
+            <li>Disabled hover effects</li>
+            <li>Cursor changes and favicon changes</li>
+            <li>No anomaly (40% chance) - psychological tension</li>
+          </ul>
+          <video 
+            src={`${BASE_PATH}/this-is-a-wrong-page.mp4`}
+            controls
+            className="w-full rounded-lg mt-8"
+            poster={`${BASE_PATH}/game-ss-1.png`}
+          >
+            Your browser does not support the video tag.
+          </video>
         </div>
       );
     },
