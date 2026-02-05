@@ -222,6 +222,30 @@ const PROJECT_SKILLS = {
     fg: "white",
     icon: <SiSupabase />,
   },
+  ocr: {
+    title: "EasyOCR",
+    bg: "black",
+    fg: "white",
+    icon: (
+      <span className="text-xs font-bold">OCR</span>
+    ),
+  },
+  llm: {
+    title: "Local LLM",
+    bg: "black",
+    fg: "white",
+    icon: (
+      <span className="text-xs font-bold">LLM</span>
+    ),
+  },
+  semantic: {
+    title: "Semantic Analysis",
+    bg: "black",
+    fg: "white",
+    icon: (
+      <span className="text-xs font-bold">AI</span>
+    ),
+  },
 };
 export type Project = {
   id: string;
@@ -459,6 +483,98 @@ const projects: Project[] = [
           >
             Your browser does not support the video tag.
           </video>
+        </div>
+      );
+    },
+  },
+  {
+    id: "consentiq",
+    category: "AI Policy Intelligence System",
+    title: "ConsentIQ",
+    src: `${BASE_PATH}/ConsentIO-1.jpg`,
+    screenshots: [
+      `${BASE_PATH}/ConsentIO-1.jpg`,
+      `${BASE_PATH}/ConsentIQ-2.jpg`,
+      `${BASE_PATH}/ConsentIQ-3.jpg`,
+      `${BASE_PATH}/ConsentIQ-4.jpg`,
+      `${BASE_PATH}/ConsentIQ-5.jpg`,
+      `${BASE_PATH}/ConsentIQ-6.jpg`,
+      `${BASE_PATH}/ConsentIQ-7.jpg`,
+      `${BASE_PATH}/ConsentIQ-8.jpg`,
+      `${BASE_PATH}/ConsentIQ-9.jpg`,
+    ],
+    skills: {
+      frontend: [
+        PROJECT_SKILLS.next,
+        PROJECT_SKILLS.ts,
+        PROJECT_SKILLS.tailwind,
+      ],
+      backend: [
+        PROJECT_SKILLS.python,
+        PROJECT_SKILLS.ocr,
+        PROJECT_SKILLS.llm,
+        PROJECT_SKILLS.semantic,
+      ],
+    },
+    live: "https://github.com/Coder-Zaid/ConsentIQ",
+    github: "https://github.com/Coder-Zaid/ConsentIQ",
+    get content() {
+      return (
+        <div>
+          <TypographyP className="font-mono text-2xl text-center">
+            AI-Driven Policy & Consent Intelligence System
+          </TypographyP>
+          <TypographyP className="font-mono ">
+            Built as part of Udgam 2.0 – Tensor v2, a national-level hackathon at Woxsen University, where our team was selected as Finalists. The entire system was designed and implemented within a 24-hour development window, focusing on real-world feasibility rather than demo-only features.
+          </TypographyP>
+          <ProjectsLinks live={this.live} repo={this.github} />
+          <TypographyH3 className="my-4 mt-8">Problem Definition</TypographyH3>
+          <TypographyP className="font-mono">
+            Online privacy policies and terms & conditions are long, legally dense, and non-transparent. They are rarely read or understood by users, updated silently, and existing tools focus on legal compliance checks rather than user impact, clause risk, or interpretability.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">System Overview</TypographyH3>
+          <TypographyP className="font-mono">
+            ConsentIQ is a policy intelligence platform that analyzes legal documents end-to-end and converts them into structured clauses, risk-weighted insights, plain-English explanations, and visual risk indicators. The system operates in offline-first mode, ensuring privacy, security, and low-latency analysis.
+          </TypographyP>
+          <TypographyH3 className="my-4 mt-8">Key Features</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li><strong>Data Ingestion Layer:</strong> Web-based policies via browser navigation and document-based policies (PDFs, scanned images)</li>
+            <li><strong>OCR & Text Normalization:</strong> Local OCR pipeline using EasyOCR/Tesseract with confidence scoring</li>
+            <li><strong>Clause Segmentation Engine:</strong> Heuristic-based splitting and semantic boundary detection</li>
+            <li><strong>AI Risk Detection:</strong> Local LLM analyzes clauses for arbitration, data sharing, liability waivers, and more</li>
+            <li><strong>Weighted Risk Scoring:</strong> Deterministic + AI-assisted model with 0-100 risk scoring system</li>
+            <li><strong>Clause Fingerprinting:</strong> Semantic similarity to identify recurring problematic clauses</li>
+            <li><strong>Personalization:</strong> Auto-rejection logic based on user preferences and keywords</li>
+            <li><strong>Admin Dashboard:</strong> Standalone Next.js 14 dashboard with analytics and reporting</li>
+          </ul>
+          <TypographyH3 className="my-4 mt-8">Risk Scoring System</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li>Arbitration clauses: +25 points</li>
+            <li>Third-party data sharing: +20 points</li>
+            <li>Liability waiver: +20 points</li>
+            <li>Indefinite data retention: +15 points</li>
+            <li>Government data access: +10 points</li>
+            <li>🟢 Safe (0-30) 🟡 Risky (31-60) 🔴 Dangerous (61-100)</li>
+          </ul>
+          <TypographyH3 className="my-4 mt-8">Tech Stack</TypographyH3>
+          <ul className="list-disc ml-6 font-mono">
+            <li><strong>Frontend:</strong> Next.js 14 (App Router), TypeScript, Vanilla CSS</li>
+            <li><strong>AI & ML:</strong> Local LLM (offline inference), EasyOCR/Tesseract OCR, Semantic clause analysis</li>
+            <li><strong>System Design:</strong> Offline-first architecture, Privacy-preserving local processing</li>
+          </ul>
+          <SlideShow
+            images={[
+              `${BASE_PATH}/ConsentIO-1.jpg`,
+              `${BASE_PATH}/ConsentIQ-2.jpg`,
+              `${BASE_PATH}/ConsentIQ-3.jpg`,
+              `${BASE_PATH}/ConsentIQ-4.jpg`,
+              `${BASE_PATH}/ConsentIQ-5.jpg`,
+              `${BASE_PATH}/ConsentIQ-6.jpg`,
+              `${BASE_PATH}/ConsentIQ-7.jpg`,
+              `${BASE_PATH}/ConsentIQ-8.jpg`,
+              `${BASE_PATH}/ConsentIQ-9.jpg`,
+            ]}
+          />
         </div>
       );
     },
