@@ -33,17 +33,19 @@ const BASE_PATH = "/assets";
 const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
   return (
     <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
-      <Link
-        className="font-mono underline flex gap-2"
-        rel="noopener"
-        target="_new"
-        href={live}
-      >
-        <Button variant={"default"} size={"sm"}>
-          Visit Website
-          <ArrowUpRight className="ml-3 w-5 h-5" />
-        </Button>
-      </Link>
+      {live && (
+        <Link
+          className="font-mono underline flex gap-2"
+          rel="noopener"
+          target="_new"
+          href={live}
+        >
+          <Button variant={"default"} size={"sm"}>
+            Visit Website
+            <ArrowUpRight className="ml-3 w-5 h-5" />
+          </Button>
+        </Link>
+      )}
       {repo && (
         <Link
           className="font-mono underline flex gap-2"
@@ -475,7 +477,7 @@ const projects: Project[] = [
             <li>Cursor changes and favicon changes</li>
             <li>No anomaly (40% chance) - psychological tension</li>
           </ul>
-          <video 
+          <video
             src={`${BASE_PATH}/this-is-a-wrong-page.mp4`}
             controls
             className="w-full rounded-lg mt-8"
@@ -516,7 +518,7 @@ const projects: Project[] = [
         PROJECT_SKILLS.semantic,
       ],
     },
-    live: "https://github.com/Coder-Zaid/ConsentIQ",
+    live: "",
     github: "https://github.com/Coder-Zaid/ConsentIQ",
     get content() {
       return (
