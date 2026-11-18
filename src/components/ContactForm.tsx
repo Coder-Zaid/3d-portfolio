@@ -9,7 +9,7 @@ import { useToast } from "./ui/use-toast";
 import { Button } from "./ui/button";
 import { config } from "@/data/config";
 
-const ContactForm = () => {
+const ContactForm = ({ emailRecipient }: { emailRecipient?: string }) => {
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -31,8 +31,10 @@ const ContactForm = () => {
         message,
       ];
 
+      const recipient = emailRecipient || config.email;
+
       const mailto = `mailto:${encodeURIComponent(
-        config.email
+        recipient
       )}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
         bodyLines.join("\n")
       )}`;

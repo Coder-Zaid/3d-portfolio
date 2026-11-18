@@ -22,6 +22,10 @@ export default function Particles({
 }: ParticlesProps) {
   const pathname = usePathname();
 
+  if (pathname?.startsWith("/female")) {
+    return null;
+  }
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);

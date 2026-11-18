@@ -119,3 +119,12 @@
     }
   }
 }
+
+/* New style for author name highlight */
+.authorName {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+.authorName:hover {
+  color: red;
+}

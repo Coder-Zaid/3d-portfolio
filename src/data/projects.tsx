@@ -456,7 +456,7 @@ const projects: Project[] = [
           <ul className="list-disc ml-6 font-mono">
             <li>8 progressive levels with increasing difficulty</li>
             <li>Randomized anomalies - no two playthroughs are the same</li>
-            <li>40% fake-out rate - sometimes there's nothing wrong</li>
+            <li>40% fake-out rate - sometimes there&apos;s nothing wrong</li>
             <li>Psychological horror through subtle visual and audio distortions</li>
             <li>One mistake ends the game - creates genuine tension</li>
             <li>Tutorial system with favicon anomaly demonstration</li>

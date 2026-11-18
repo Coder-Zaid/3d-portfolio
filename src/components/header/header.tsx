@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./style.module.scss";
 import { opacity, background } from "./anim";
 import Nav from "./nav";
@@ -18,11 +19,16 @@ interface HeaderProps {
 
 const Header = ({ loader }: HeaderProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const pathname = usePathname();
+  const isFemale = pathname?.startsWith("/female");
+  const authorName = isFemale ? "Syeda Zubia Areej" : config.author;
+
   return (
     <motion.header
       className={cn(
         styles.header,
-        "transition-colors delay-100 duration-500 ease-in z-[1000]"
+        "transition-colors delay-100 duration-500 ease-in z-[1000]",
+        isFemale && "female-theme"
       )}
       style={{
         background: isActive ? "hsl(var(--background) / .8)" : "transparent",
@@ -48,54 +54,56 @@ const Header = ({ loader }: HeaderProps) => {
       >
       </div> */}
       <div className={cn(styles.bar, "flex items-center justify-between")}>
-        <Link href="/" className="flex items-center justify-center">
+        <Link href={isFemale ? "/female" : "/"} className="flex items-center justify-center">
           <Button variant={"link"} className="text-md">
-            {config.author}
+            <span className={styles.authorName}>{authorName}</span>
           </Button>
         </Link>
 
-        <FunnyThemeToggle className="w-6 h-6 mr-4 hidden md:flex" />
+        {!isFemale && <FunnyThemeToggle className="w-6 h-6 mr-4 hidden md:flex" />}
         <OnlineUsers />
-        {config.githubUsername && config.githubRepo && (
+        {!isFemale && config.githubUsername && config.githubRepo && (
           <GitHubStarsButton
             username={config.githubUsername}
             repo={config.githubRepo}
             className="mr-4"
           />
         )}
-        <Button
-          variant={"ghost"}
-          onClick={() => setIsActive(!isActive)}
-          className={cn(
-            styles.el,
-            "m-0 p-0 h-6 bg-transparent flex items-center justify-center"
-          )}
-        >
-          <div className="relative hidden md:flex items-center">
-            <motion.p
-              variants={opacity}
-              animate={!isActive ? "open" : "closed"}
-            >
-              Menu
-            </motion.p>
-            <motion.p variants={opacity} animate={isActive ? "open" : "closed"}>
-              Close
-            </motion.p>
-          </div>
-          <div
-            className={`${styles.burger} ${isActive ? styles.burgerActive : ""
-              }`}
-          ></div>
-        </Button>
+        {!isFemale && (
+          <Button
+            variant={"ghost"}
+            onClick={() => setIsActive(!isActive)}
+            className={cn(
+              styles.el,
+              "m-0 p-0 h-6 bg-transparent flex items-center justify-center"
+            )}
+          >
+            <div className="relative hidden md:flex items-center">
+              <motion.p
+                variants={opacity}
+                animate={!isActive ? "open" : "closed"}
+              >
+                Menu
+              </motion.p>
+              <motion.p variants={opacity} animate={isActive ? "open" : "closed"}>
+                Close
+              </motion.p>
+            </div>
+            <div
+              className={`${styles.burger} ${isActive ? styles.burgerActive : ""
+                }`}
+            ></div>
+          </Button>
+        )}
       </div>
       <motion.div
         variants={background}
         initial="initial"
-        animate={isActive ? "open" : "closed"}
+        animate={isActive && !isFemale ? "open" : "closed"}
         className={styles.background}
       ></motion.div>
       <AnimatePresence mode="wait">
-        {isActive && <Nav setIsActive={setIsActive} />}
+        {isActive && !isFemale && <Nav setIsActive={setIsActive} />}
       </AnimatePresence>
     </motion.header>
   );

@@ -98,3 +98,77 @@ body {
     pointer-events: auto;
   }
 }
+
+/* Female theme override (forces Sakura Pink `#F9C6D4` & Cloud White `#FAF9F6`) */
+.female-theme, .dark .female-theme {
+  --background: 40 20% 98% !important; /* Cloud White #FAF9F6 */
+  --foreground: 346 40% 18% !important; /* Elegant deep pink-charcoal text */
+  --card: 40 20% 98% !important;
+  --card-foreground: 346 40% 18% !important;
+  --popover: 40 20% 98% !important;
+  --popover-foreground: 346 40% 18% !important;
+  --primary: 346 79% 89% !important; /* Sakura Pink #F9C6D4 */
+  --primary-foreground: 346 50% 25% !important; /* Contrast text for buttons */
+  --secondary: 346 80% 94% !important; /* Lighter soft pink */
+  --secondary-foreground: 346 50% 25% !important;
+  --muted: 40 10% 93% !important;
+  --muted-foreground: 346 15% 42% !important;
+  --accent: 346 80% 94% !important;
+  --accent-foreground: 346 50% 25% !important;
+  --destructive: 0 84.2% 60.2% !important;
+  --destructive-foreground: 210 40% 98% !important;
+  --border: 346 30% 86% !important;
+  --input: 346 30% 86% !important;
+  --ring: 346 79% 89% !important;
+  --brand: hsl(346, 79%, 89%) !important;
+  color: hsl(346 40% 18%) !important;
+}
+
+.female-theme:not(.bg-transparent), .dark .female-theme:not(.bg-transparent) {
+  background-color: hsl(40 20% 98%) !important;
+}
+
+/* Floating Sakura Petal Keyframes */
+@keyframes sakura-fall {
+  0% {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sakura-sway {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(80px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+/* Hide the Spline 3D Keyboard on female page (replaced by CSS 3D keyboard) */
+.female-spline-canvas {
+  pointer-events: none !important;
+}
+.female-spline-canvas canvas {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.female-page, .dark body.female-page {
+  background-color: #FAF9F6 !important;
+  background-image: none !important;
+  color: #3e1b24 !important;
+}

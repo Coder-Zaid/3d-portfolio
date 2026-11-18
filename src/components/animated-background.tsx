@@ -5,13 +5,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const Spline = React.lazy(() => import("@splinetool/react-spline"));
 import { Skill, SkillNames, SKILLS } from "@/data/constants";
-import { sleep } from "@/lib/utils";
+import { sleep, cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Section, getKeyboardState } from "./animated-background-config";
 import { useSounds } from "./realtime/hooks/use-sounds";
+import confetti from "canvas-confetti";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,6 +35,57 @@ const AnimatedBackground = () => {
 
   const [keyboardRevealed, setKeyboardRevealed] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const isFemale = pathname?.startsWith("/female");
+
+  // --- Dynamic Skill / Social mapping ---
+  const getSkillInfo = (name: string) => {
+    if (isFemale) {
+      const femaleSkills: Record<string, { label: string; shortDescription: string }> = {
+        js: {
+          label: "Email",
+          shortDescription: "zubiaareej2@gmail.com (Click keycap to send email 🌸)",
+        },
+        ts: {
+          label: "Phone",
+          shortDescription: "+91 9100805104 (Click keycap to call/text 🌸)",
+        },
+        react: {
+          label: "LinkedIn",
+          shortDescription: "Syeda Zubia Areej (Click keycap to open LinkedIn 🌸)",
+        },
+        nextjs: {
+          label: "Instagram",
+          shortDescription: "Syeda Zubia Areej (Click keycap to open Instagram 🌸)",
+        },
+        python: {
+          label: "Facebook",
+          shortDescription: "Syeda Zubia Areej (Click keycap to open Facebook 🌸)",
+        },
+        ai: {
+          label: "TikTok",
+          shortDescription: "Syeda Zubia Areej (Click keycap to open TikTok 🌸)",
+        },
+        tailwind: {
+          label: "Twitter",
+          shortDescription: "Syeda Zubia Areej (Click keycap to open Twitter 🌸)",
+        },
+        ml: {
+          label: "GitHub",
+          shortDescription: "Syeda Zubia Areej (Click keycap to visit GitHub 🌸)",
+        },
+      };
+
+      return (
+        femaleSkills[name] || {
+          label: "Syeda Zubia Areej",
+          shortDescription: "AI / Video Editor • Click on other keys for socials! 🌸",
+        }
+      );
+    }
+
+    return SKILLS[name as SkillNames];
+  };
 
   // --- Event Handlers ---
 
@@ -50,12 +102,12 @@ const AnimatedBackground = () => {
       }
     } else {
       if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
-        const skill = SKILLS[e.target.name as SkillNames];
+        const skill = getSkillInfo(e.target.name);
         if (skill) {
           if (selectedSkillRef.current) playReleaseSound();
           playPressSound();
-          setSelectedSkill(skill);
-          selectedSkillRef.current = skill;
+          setSelectedSkill({ name: e.target.name, ...skill } as any);
+          selectedSkillRef.current = { name: e.target.name, ...skill } as any;
         }
       }
     }
@@ -82,15 +134,39 @@ const AnimatedBackground = () => {
     });
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp || isInputFocused()) return;
-      const skill = SKILLS[e.target.name as SkillNames];
+      const skill = getSkillInfo(e.target.name);
       if (skill) {
         playPressSound();
-        setSelectedSkill(skill);
-        selectedSkillRef.current = skill;
+        setSelectedSkill({ name: e.target.name, ...skill } as any);
+        selectedSkillRef.current = { name: e.target.name, ...skill } as any;
         splineApp.setVariable("heading", skill.label);
         splineApp.setVariable("desc", skill.shortDescription);
       }
     });
+
+    splineApp.addEventListener("mouseDown", (e) => {
+      if (isFemale) {
+        const name = e.target.name;
+        if (name === "js") window.open("mailto:zubiaareej2@gmail.com", "_blank");
+        else if (name === "ts") window.open("tel:+919100805104", "_blank");
+        else if (name === "react") window.open("https://www.linkedin.com/in/syeda-zubia-areej", "_blank");
+        else if (name === "nextjs") window.open("https://www.instagram.com", "_blank");
+        else if (name === "python") window.open("https://www.facebook.com", "_blank");
+        else if (name === "ai") window.open("https://www.tiktok.com", "_blank");
+        else if (name === "tailwind") window.open("https://twitter.com", "_blank");
+        else if (name === "ml") window.open("https://github.com", "_blank");
+
+        if (["js", "ts", "react", "nextjs", "python", "ai", "tailwind", "ml"].includes(name)) {
+          confetti({
+            particleCount: 30,
+            spread: 50,
+            origin: { y: 0.6 },
+            colors: ["#F9C6D4", "#FAF9F6", "#e49b88"],
+          });
+        }
+      }
+    });
+
     splineApp.addEventListener("mouseHover", handleMouseHover);
   };
 
@@ -419,7 +495,7 @@ const AnimatedBackground = () => {
   // Reveal keyboard on load/route change
   useEffect(() => {
     const hash = activeSection === "hero" ? "#" : `#${activeSection}`;
-    router.push("/" + hash, { scroll: false });
+    router.push((isFemale ? "/female" : "") + hash, { scroll: false });
 
     if (!splineApp || isLoading || keyboardRevealed) return;
     updateKeyboardTransform();
@@ -427,15 +503,17 @@ const AnimatedBackground = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Spline
-        className="w-full h-full fixed"
-        ref={splineContainer}
-        onLoad={(app: Application) => {
-          setSplineApp(app);
-          bypassLoading();
-        }}
-        scene="/assets/skills-keyboard.spline"
-      />
+      <div className={cn("w-full h-full fixed", isFemale && "female-spline-canvas")}>
+        <Spline
+          className="w-full h-full fixed border-none"
+          ref={splineContainer}
+          onLoad={(app: Application) => {
+            setSplineApp(app);
+            bypassLoading();
+          }}
+          scene="/assets/skills-keyboard.spline"
+        />
+      </div>
     </Suspense>
   );
 };
